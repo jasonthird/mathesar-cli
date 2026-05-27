@@ -1,8 +1,44 @@
 # mathesar-cli
 
-A local CLI and optional MCP server for Mathesar's JSON-RPC API.
+## Install
 
-The project provides three access layers:
+Run without installing with `uvx`:
+
+```sh
+uvx mathesar-cli --help
+```
+
+Install as an isolated CLI with `uv tool`:
+
+```sh
+uv tool install mathesar-cli
+```
+
+Or with `pipx`:
+
+```sh
+pipx install mathesar-cli
+```
+
+Then log in and start using it:
+
+```sh
+mathesar --url http://localhost login --username USER
+mathesar db list
+```
+
+For the optional MCP server, install the MCP extra from a checkout or package source that supports extras:
+
+```sh
+uv tool install 'mathesar-cli[mcp]'
+mathesar-mcp
+```
+
+## What It Is
+
+`mathesar-cli` is a local CLI and optional MCP server for Mathesar's JSON-RPC API.
+
+It provides three access layers:
 
 - Friendly CLI groups for common database work: `db`, `schema`, `table`, `column`, and `record`.
 - Universal CLI access for every exposed Mathesar RPC method: `api`, `call`, and `rpc`.
@@ -11,21 +47,21 @@ The project provides three access layers:
 ## Requirements
 
 - Python 3.10+
-- [uv](https://docs.astral.sh/uv/)
 - A reachable Mathesar instance
+- `uv`, `pipx`, or `pip` for installation
 
 ## Development
 
-Set up the project:
+Set up the project from a checkout:
 
 ```sh
-uv sync --extra dev --extra mcp
+uv sync --extra dev --extra mcp --extra publish
 ```
 
 Run tests:
 
 ```sh
-uv run pytest
+uv run --extra dev pytest
 ```
 
 Run the CLI locally:
@@ -40,37 +76,16 @@ Build distribution artifacts:
 uv build
 ```
 
-## Install
-
-From a checkout:
-
-```sh
-uv tool install --from . mathesar-cli
-```
-
-With MCP support:
-
-```sh
-uv tool install --from '.[mcp]' mathesar-cli
-```
-
-During development, prefer:
-
-```sh
-uv run mathesar ...
-uv run mathesar-mcp
-```
-
 ## Log In
 
 ```sh
-uv run mathesar --url http://localhost login --username USER
+mathesar --url http://localhost login --username USER
 ```
 
 Omit `--password` for an interactive prompt. For non-interactive use:
 
 ```sh
-uv run mathesar --url http://localhost login --username USER --password PASS
+mathesar --url http://localhost login --username USER --password PASS
 ```
 
 The CLI saves only the Mathesar URL and session cookies:
@@ -84,9 +99,9 @@ It does not save the username or password. Override the config location with `MA
 ## Discover Methods
 
 ```sh
-uv run mathesar methods list
-uv run mathesar methods help records.list
-uv run mathesar methods signature records.list
+mathesar methods list
+mathesar methods help records.list
+mathesar methods signature records.list
 ```
 
 ## Friendly Commands
@@ -94,45 +109,45 @@ uv run mathesar methods signature records.list
 List configured databases:
 
 ```sh
-uv run mathesar db list
-uv run mathesar db get -d 1
+mathesar db list
+mathesar db get -d 1
 ```
 
 Manage schemas:
 
 ```sh
-uv run mathesar schema list -d 1
-uv run mathesar schema create -d 1 reporting
-uv run mathesar schema delete -d 1 17505
+mathesar schema list -d 1
+mathesar schema create -d 1 reporting
+mathesar schema delete -d 1 17505
 ```
 
 Manage tables:
 
 ```sh
-uv run mathesar table list -d 1 -s 2200
-uv run mathesar table get -d 1 -t 17500 --metadata
-uv run mathesar table create -d 1 -s 2200 contacts --columns '[{"name":"name","type":"text"}]'
-uv run mathesar table patch -d 1 -t 17500 --name contacts_archive --description "Archived contacts"
-uv run mathesar table delete -d 1 -t 17507
+mathesar table list -d 1 -s 2200
+mathesar table get -d 1 -t 17500 --metadata
+mathesar table create -d 1 -s 2200 contacts --columns '[{"name":"name","type":"text"}]'
+mathesar table patch -d 1 -t 17500 --name contacts_archive --description "Archived contacts"
+mathesar table delete -d 1 -t 17507
 ```
 
 Manage columns:
 
 ```sh
-uv run mathesar column list -d 1 -t 17500
-uv run mathesar column add -d 1 -t 17500 --columns '[{"name":"email","type":"text"}]'
-uv run mathesar column patch -d 1 -t 17500 --columns '[{"id":2,"name":"full_name"}]'
-uv run mathesar column delete -d 1 -t 17500 3
+mathesar column list -d 1 -t 17500
+mathesar column add -d 1 -t 17500 --columns '[{"name":"email","type":"text"}]'
+mathesar column patch -d 1 -t 17500 --columns '[{"id":2,"name":"full_name"}]'
+mathesar column delete -d 1 -t 17500 3
 ```
 
 Manage records:
 
 ```sh
-uv run mathesar record list -d 1 -t 17500 --limit 20
-uv run mathesar record get -d 1 -t 17500 1
-uv run mathesar record add -d 1 -t 17500 --data '{"2":"Alice"}'
-uv run mathesar record patch -d 1 -t 17500 1 --data '{"2":"Bob"}'
-uv run mathesar record delete -d 1 -t 17500 1
+mathesar record list -d 1 -t 17500 --limit 20
+mathesar record get -d 1 -t 17500 1
+mathesar record add -d 1 -t 17500 --data '{"2":"Alice"}'
+mathesar record patch -d 1 -t 17500 1 --data '{"2":"Bob"}'
+mathesar record delete -d 1 -t 17500 1
 ```
 
 Mathesar records are keyed by column attnum, not column name. Use `mathesar column list -d DATABASE_ID -t TABLE_OID` to find attnums.
@@ -142,9 +157,9 @@ Mathesar records are keyed by column attnum, not column name. Use `mathesar colu
 Use `api` for readable path-style access to every RPC method:
 
 ```sh
-uv run mathesar api records list -p database_id=1 -p table_oid=22031 -p limit=20
-uv run mathesar api databases configured list
-uv run mathesar api schemas privileges list-direct -p database_id=1 -p schema_oid=2200
+mathesar api records list -p database_id=1 -p table_oid=22031 -p limit=20
+mathesar api databases configured list
+mathesar api schemas privileges list-direct -p database_id=1 -p schema_oid=2200
 ```
 
 Hyphens in path segments become underscores, so `list-direct` calls `list_direct`.
@@ -152,14 +167,14 @@ Hyphens in path segments become underscores, so `list-direct` calls `list_direct
 Use `call` when you prefer method names:
 
 ```sh
-uv run mathesar call records.list -p database_id=1 -p table_oid=22031
-uv run mathesar call records list --params-json '{"database_id": 1, "table_oid": 22031}'
+mathesar call records.list -p database_id=1 -p table_oid=22031
+mathesar call records list --params-json '{"database_id": 1, "table_oid": 22031}'
 ```
 
 Use `rpc` for exact JSON-RPC terminology:
 
 ```sh
-uv run mathesar rpc users.list
+mathesar rpc users.list
 ```
 
 Values passed with `-p` are parsed as JSON when possible, so numbers, booleans, arrays, objects, and `null` work naturally.
@@ -183,7 +198,7 @@ uv sync --extra mcp
 Start the server over stdio:
 
 ```sh
-uv run mathesar-mcp
+mathesar-mcp
 ```
 
 Useful MCP tools include:
