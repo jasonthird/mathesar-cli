@@ -1,0 +1,7 @@
+interface:
+  display_name: "Mathesar CLI"
+  short_description: "Operate Mathesar via CLI or MCP tools"
+  default_prompt: "Use $mathesar-cli to log in, manage Mathesar data, and call JSON-RPC APIs."
+
+policy:
+  allow_implicit_invocation: true

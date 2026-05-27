@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mathesar-cli"
+version = "0.1.0"
+description = "Command line JSON-RPC client for Mathesar"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "GPL-3.0-or-later"
+authors = [{ name = "Mathesar CLI contributors" }]
+dependencies = []
+keywords = ["mathesar", "cli", "mcp", "json-rpc", "database"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Database",
+    "Topic :: Utilities",
+]
+
+[project.urls]
+Homepage = "https://github.com/jasonthird/mathesar-cli"
+Repository = "https://github.com/jasonthird/mathesar-cli"
+Issues = "https://github.com/jasonthird/mathesar-cli/issues"
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+mcp = ["mcp>=1.0.0"]
+
+[project.scripts]
+mathesar = "mathesar_cli.cli:main"
+mathesar-mcp = "mathesar_cli.mcp_server:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.uv]
+package = true
