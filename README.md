@@ -5,7 +5,7 @@
 Run without installing with `uvx`:
 
 ```sh
-uvx mathesar-cli --help
+uvx --from mathesar-cli mathesar --help
 ```
 
 Install as an isolated CLI with `uv tool`:
