@@ -220,16 +220,24 @@ Build:
 uv build
 ```
 
+Validate the distribution metadata with Twine:
+
+```sh
+uv run --extra publish twine check dist/*
+```
+
 Publish to TestPyPI:
 
 ```sh
-uv publish --publish-url https://test.pypi.org/legacy/ --token "$TEST_PYPI_TOKEN"
+TWINE_USERNAME="__token__" TWINE_PASSWORD="$TEST_PYPI_TOKEN" \
+  uv run --extra publish twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 ```
 
 Publish to PyPI:
 
 ```sh
-uv publish --token "$PYPI_TOKEN"
+TWINE_USERNAME="__token__" TWINE_PASSWORD="$PYPI_TOKEN" \
+  uv run --extra publish twine upload dist/*
 ```
 
 Before publishing, confirm the package name is available and set final project URLs in `pyproject.toml`.

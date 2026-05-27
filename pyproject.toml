@@ -31,6 +31,7 @@ Issues = "https://github.com/jasonthird/mathesar-cli/issues"
 [project.optional-dependencies]
 dev = ["pytest>=8"]
 mcp = ["mcp>=1.0.0"]
+publish = ["twine>=6.2.0"]
 
 [project.scripts]
 mathesar = "mathesar_cli.cli:main"
