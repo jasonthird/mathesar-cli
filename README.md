@@ -240,4 +240,11 @@ GNU General Public License v3.0 or later. See [LICENSE](LICENSE).
 
 ## Method Coverage
 
-Run `mathesar methods list` against your target instance for the authoritative list. See [docs/METHODS.md](docs/METHODS.md) for the list observed from the local instance during development.
+Mathesar's upstream JSON-RPC API is not guaranteed to be stable yet, so method names, parameters, signatures, and response shapes may break between Mathesar releases. Run `mathesar methods list`, `mathesar methods help METHOD`, and `mathesar methods signature METHOD` against your target instance when building automation.
+
+This client was tested against a local Mathesar instance on 2026-05-28 reporting:
+
+- `last_confirmed_sql_version`: `0.10.1`
+- `system.listMethods`: 106 exposed RPC methods
+
+See [docs/METHODS.md](docs/METHODS.md) for the method list observed from that instance during development.
