@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mathesar-cli"
-version = "0.1.0"
+version = "0.1.1"
 description = "Command line JSON-RPC client for Mathesar"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -35,6 +35,7 @@ publish = ["twine>=6.2.0"]
 
 [project.scripts]
 mathesar = "mathesar_cli.cli:main"
+mathesar-cli = "mathesar_cli.cli:main"
 mathesar-mcp = "mathesar_cli.mcp_server:main"
 
 [tool.pytest.ini_options]
