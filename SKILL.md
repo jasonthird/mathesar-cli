@@ -11,7 +11,7 @@ Use uv:
 
 ```sh
 uv sync --extra dev --extra mcp
-uv run mathesar --help
+uv run mathesar-cli --help
 uv run mathesar-mcp
 ```
 

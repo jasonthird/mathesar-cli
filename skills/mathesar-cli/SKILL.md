@@ -1,6 +1,6 @@
 ---
 name: mathesar-cli
-description: Use this skill when an agent needs to operate a Mathesar instance through the mathesar CLI or optional MCP server, including login, method discovery, database/schema/table/column/record management, and arbitrary JSON-RPC calls.
+description: Use this skill when an agent needs to operate a Mathesar instance through the mathesar-cli command or optional MCP server, including login, method discovery, database/schema/table/column/record management, and arbitrary JSON-RPC calls.
 ---
 
 # Mathesar CLI
@@ -18,7 +18,7 @@ uv sync --extra dev --extra mcp
 Run CLI commands with:
 
 ```sh
-uv run mathesar ...
+uv run mathesar-cli ...
 ```
 
 Start the MCP server with:
@@ -32,7 +32,7 @@ uv run mathesar-mcp
 Log in once before API work:
 
 ```sh
-uv run mathesar --url http://localhost login --username USERNAME
+uv run mathesar-cli --url http://localhost login --username USERNAME
 ```
 
 Use `--password` only for non-interactive automation. The saved config contains URL, `sessionid`, and `csrftoken`, not the username or password.
@@ -42,32 +42,32 @@ Use `--password` only for non-interactive automation. The saved config contains 
 Treat the target instance as authoritative:
 
 ```sh
-uv run mathesar methods list
-uv run mathesar methods help records.list
-uv run mathesar methods signature records.list
+uv run mathesar-cli methods list
+uv run mathesar-cli methods help records.list
+uv run mathesar-cli methods signature records.list
 ```
 
 ## Friendly CLI Workflows
 
 ```sh
-uv run mathesar db list
-uv run mathesar schema list -d 1
-uv run mathesar table list -d 1 -s 2200
-uv run mathesar table patch -d 1 -t 17500 --name new_table_name
-uv run mathesar column list -d 1 -t 17500
-uv run mathesar record list -d 1 -t 17500 --limit 20
-uv run mathesar record add -d 1 -t 17500 --data '{"2":"Alice"}'
+uv run mathesar-cli db list
+uv run mathesar-cli schema list -d 1
+uv run mathesar-cli table list -d 1 -s 2200
+uv run mathesar-cli table patch -d 1 -t 17500 --name new_table_name
+uv run mathesar-cli column list -d 1 -t 17500
+uv run mathesar-cli record list -d 1 -t 17500 --limit 20
+uv run mathesar-cli record add -d 1 -t 17500 --data '{"2":"Alice"}'
 ```
 
-Records are keyed by column attnum. Always call `mathesar column list` before writing records unless attnums are already known.
+Records are keyed by column attnum. Always call `mathesar-cli column list` before writing records unless attnums are already known.
 
 ## Full API Coverage
 
 Use `api` for friendly access to any RPC method:
 
 ```sh
-uv run mathesar api databases configured list
-uv run mathesar api schemas privileges list-direct -p database_id=1 -p schema_oid=2200
+uv run mathesar-cli api databases configured list
+uv run mathesar-cli api schemas privileges list-direct -p database_id=1 -p schema_oid=2200
 ```
 
 Hyphens become underscores. `list-direct` maps to `list_direct`.
@@ -75,8 +75,8 @@ Hyphens become underscores. `list-direct` maps to `list_direct`.
 Use raw method calls when clearer:
 
 ```sh
-uv run mathesar call records.list -p database_id=1 -p table_oid=22031
-uv run mathesar call records list --params-json '{"database_id": 1, "table_oid": 22031}'
+uv run mathesar-cli call records.list -p database_id=1 -p table_oid=22031
+uv run mathesar-cli call records list --params-json '{"database_id": 1, "table_oid": 22031}'
 ```
 
 ## MCP Tools

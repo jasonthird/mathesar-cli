@@ -376,7 +376,7 @@ def add_table_oid(parser: argparse.ArgumentParser) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="mathesar", description="CLI JSON-RPC client for Mathesar")
+    parser = argparse.ArgumentParser(prog="mathesar-cli", description="CLI JSON-RPC client for Mathesar")
     add_common_options(parser)
     subparsers = parser.add_subparsers(dest="command", required=True)
 
